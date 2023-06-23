@@ -3,22 +3,11 @@
 @section('content')
   
 
-
     <!-- feed starts -->
     <div class="feed">
       <div class="feed__header">
         <h2>Home</h2>
       </div>
-
-
-      @if(Session::has('success_message'))
-      <div class="alert alert-success text-center">{{Session::get('success_message')}}</div>
-      @endif
-
-      @if(Session::has('failure_message'))
-      <div class="alert alert-danger text-center">{{Session::get('failure_message')}}</div>
-      @endif
-
 
       <!-- tweetbox starts -->
       <div class="tweetBox">
@@ -42,12 +31,15 @@
 
 
 
-      @foreach($following_tweets as $tweet)
+      @foreach($followers as $user)
       <!-- post starts -->
+
+     @if($user->id != Auth::user()->id)
+
       <div class="post">
         <div class="post__avatar">
           <img
-            src="{{asset('images/'.$tweet->user_image)}}"
+            src="{{asset('images/'.$user->image)}}"
             alt=""
            
           />
@@ -57,29 +49,41 @@
           <div class="post__header">
             <div class="post__headerText">
               <h3>
-                {{$tweet->user_name}}
+                  <a href="{{route('profile',['id'=>$user->id])}}"> {{$user->name}}</a>
                 <span class="post__headerSpecial"
-                  ><span class="material-icons post__badge"> verified </span></span
+                  ><span class="material-icons post__badge"> verified </span>{{$user->email}}</span
                 >
+                <form  method="POST" action="{{route('single_message')}}">
+                  @csrf
+                  <input type="hidden" name="other_user_id" value="{{$user->id}}">
+                  <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                  <input class="tweetBox__tweetButton" value="Message" type="submit">
+               </form>
               </h3>
             </div>
             <div class="post__headerDescription">
-              <p>{{$tweet->text}}</p>
+             
             </div>
           </div>
           <img
             src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
             alt=""
           />
+        
           <div class="post__footer">
-            <span class="material-icons"> repeat </span>
-      
-            <span class="material-icons"> publish </span>
+           
+            
+       
+
+
           </div>
+
+
         </div>
       </div>
-      {{$following_tweets->links()}}
       <!-- post ends -->
+      @endif
+    
       @endforeach
 
       

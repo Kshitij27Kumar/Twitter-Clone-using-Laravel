@@ -1,9 +1,9 @@
-
-    <!-- widgets starts -->
-    <div class="widgets">
+   <!-- widgets starts -->
+   <div class="widgets">
       <div class="widgets__input">
         <span class="material-icons widgets__searchIcon"> search </span>
-        <input type="text" placeholder="Search Twitter" />
+        
+       
       </div>
 
       <div class="widgets__widgetContainer">
@@ -31,4 +31,3 @@
     <!-- widgets ends -->
   </body>
 </html>
-Footer

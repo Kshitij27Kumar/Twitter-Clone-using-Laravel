@@ -2,13 +2,28 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    You are logged in!
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <!-- {{ __('You are logged in!') }} -->
+
+                    <div>
+                        <div>{{Auth::user()->name}}</div>
+                        <form action="{{route('upload_image')}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="image" >
+                            <input type="submit" value="upload image">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
